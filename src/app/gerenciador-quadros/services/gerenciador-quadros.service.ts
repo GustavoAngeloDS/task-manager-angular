@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Quadro } from 'src/app/shared/models/quadro.model';
+import { Usuario } from 'src/app/shared/models/usuario.model';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -17,11 +18,11 @@ export class GerenciadorQuadrosService {
   }
 
   save(quadro: Quadro): Observable<Quadro> {
+    quadro.usuario = new Usuario(1);; //Remover quando a implementação de usuário for concluida
     return this.httpClient.post<Quadro>(this.apiUrl, quadro);
   }
 
   update(quadro: Quadro): Observable<Quadro> {
-    console.log(quadro);
     return this.httpClient.put<Quadro>(this.apiUrl, quadro);
   }
 

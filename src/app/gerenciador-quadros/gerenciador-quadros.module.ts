@@ -7,13 +7,15 @@ import { NgxBootstrapIconsModule, allIcons } from 'ngx-bootstrap-icons';
 import { ModalExcluirQuadroComponent } from './modal-excluir-quadro/modal-excluir-quadro.component';
 import { ModalAtualizarQuadroComponent } from './modal-atualizar-quadro/modal-atualizar-quadro.component';
 import { FormsModule } from '@angular/forms';
+import { ModalCriarQuadroComponent } from './modal-criar-quadro/modal-criar-quadro.component';
 
 
 @NgModule({
   declarations: [
     MeusQuadrosComponent,
     ModalExcluirQuadroComponent,
-    ModalAtualizarQuadroComponent
+    ModalAtualizarQuadroComponent,
+    ModalCriarQuadroComponent
   ],
   imports: [
     CommonModule,

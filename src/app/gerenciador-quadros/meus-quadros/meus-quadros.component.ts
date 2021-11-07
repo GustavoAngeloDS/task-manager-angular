@@ -4,6 +4,7 @@ import { GerenciadorQuadrosService } from '../services/gerenciador-quadros.servi
 import {NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ModalExcluirQuadroComponent } from '../modal-excluir-quadro/modal-excluir-quadro.component';
 import { ModalAtualizarQuadroComponent } from '../modal-atualizar-quadro/modal-atualizar-quadro.component';
+import { ModalCriarQuadroComponent } from '../modal-criar-quadro/modal-criar-quadro.component';
 
 @Component({
   selector: 'app-meus-quadros',
@@ -41,4 +42,7 @@ export class MeusQuadrosComponent implements OnInit {
     modalRef.componentInstance.quadro = quadro;
   }
 
+  abrirModalNovoQuadro(){
+    this.modalService.open(ModalCriarQuadroComponent);
+  }
 }
