@@ -36,5 +36,5 @@ export class ModalExcluirQuadroComponent implements OnInit {
   redirectTo(uri:string){
     this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>
     this.router.navigate([uri]));
- }
+  }
 }

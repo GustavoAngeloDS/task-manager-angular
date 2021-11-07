@@ -5,17 +5,21 @@ import { GerenciadorQuadrosService } from './services/gerenciador-quadros.servic
 import { DragDropModule } from '@angular/cdk/drag-drop'
 import { NgxBootstrapIconsModule, allIcons } from 'ngx-bootstrap-icons';
 import { ModalExcluirQuadroComponent } from './modal-excluir-quadro/modal-excluir-quadro.component';
+import { ModalAtualizarQuadroComponent } from './modal-atualizar-quadro/modal-atualizar-quadro.component';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
   declarations: [
     MeusQuadrosComponent,
-    ModalExcluirQuadroComponent
+    ModalExcluirQuadroComponent,
+    ModalAtualizarQuadroComponent
   ],
   imports: [
     CommonModule,
     DragDropModule,
-    NgxBootstrapIconsModule.pick(allIcons)
+    NgxBootstrapIconsModule.pick(allIcons),
+    FormsModule
   ],
   providers: [
     GerenciadorQuadrosService

@@ -21,6 +21,7 @@ export class GerenciadorQuadrosService {
   }
 
   update(quadro: Quadro): Observable<Quadro> {
+    console.log(quadro);
     return this.httpClient.put<Quadro>(this.apiUrl, quadro);
   }
 

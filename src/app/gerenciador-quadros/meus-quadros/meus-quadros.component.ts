@@ -3,6 +3,7 @@ import { Quadro } from 'src/app/shared/models/quadro.model';
 import { GerenciadorQuadrosService } from '../services/gerenciador-quadros.service';
 import {NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ModalExcluirQuadroComponent } from '../modal-excluir-quadro/modal-excluir-quadro.component';
+import { ModalAtualizarQuadroComponent } from '../modal-atualizar-quadro/modal-atualizar-quadro.component';
 
 @Component({
   selector: 'app-meus-quadros',
@@ -32,6 +33,11 @@ export class MeusQuadrosComponent implements OnInit {
 
   abrirModalExcluirQuadro(quadro: Quadro){
     const modalRef = this.modalService.open(ModalExcluirQuadroComponent);
+    modalRef.componentInstance.quadro = quadro;
+  }
+
+  abrirModalEditarQuadro(quadro: Quadro){
+    const modalRef = this.modalService.open(ModalAtualizarQuadroComponent);
     modalRef.componentInstance.quadro = quadro;
   }
 
