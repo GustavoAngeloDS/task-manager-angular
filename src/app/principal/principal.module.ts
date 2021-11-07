@@ -1,17 +1,15 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MenuComponent } from './menu/menu.component';
-import { QuadroService } from './services/quadro.service';
+import { MenuService } from './services/menu.service';
 import { FormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
-import { CriarQuadroComponent } from './criar-quadro/criar-quadro.component';
 
 @NgModule({
   declarations: [
-    MenuComponent,
-    CriarQuadroComponent
+    MenuComponent
   ],
   imports: [
     CommonModule,
@@ -21,7 +19,7 @@ import { CriarQuadroComponent } from './criar-quadro/criar-quadro.component';
     RouterModule
   ],
   providers: [
-    QuadroService
+    MenuService
   ]
 })
 export class PrincipalModule { }

@@ -1,0 +1,11 @@
+<div class="modal-header">
+  <h5 class="modal-title" id="modalLabel"> Remover quadro </h5>
+</div>
+<div class="modal-body text-center">
+  <div>
+    <b><p>Tem certeza que deseja excluir o quadro {{ quadro.nome }}?</p></b>
+    <p>Esta ação não poderá ser desfeita</p>
+  </div>
+  <button type="button" class="btn btn-danger" (click)="excluirQuadro()">Confirmar exclusão</button>
+  <button type="button" class="btn btn-outline-dark" (click)="activeModal.close()">Cancelar</button>
+</div>

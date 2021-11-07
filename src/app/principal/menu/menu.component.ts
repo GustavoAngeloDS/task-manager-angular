@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Quadro } from 'src/app/shared/models/quadro.model';
-import { QuadroService } from '../services/quadro.service';
+import { MenuService } from '../services/menu.service';
 
 @Component({
   selector: 'app-menu',
@@ -11,7 +11,7 @@ export class MenuComponent implements OnInit {
 
   public quadros!: Quadro[];
 
-  constructor(private quadroService: QuadroService) { }
+  constructor(private quadroService: MenuService) { }
 
   ngOnInit(): void {
     this.buscarQuadrosAtivos();

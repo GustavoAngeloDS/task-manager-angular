@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { MenuComponent } from './principal/menu/menu.component';
+import { GerenciadorQuadrosModule } from './gerenciador-quadros/gerenciador-quadros.module';
 import { PrincipalModule } from './principal/principal.module';
 import { WorkAreaModule } from './work-area/work-area.module';
 
@@ -15,7 +15,9 @@ import { WorkAreaModule } from './work-area/work-area.module';
     BrowserModule,
     AppRoutingModule,
     PrincipalModule,
-    WorkAreaModule
+    WorkAreaModule,
+    GerenciadorQuadrosModule
+    
   ],
   providers: [],
   bootstrap: [AppComponent]

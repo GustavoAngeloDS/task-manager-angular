@@ -1,0 +1,23 @@
+<div class="principal">
+  <div class="row">
+    <div class="quadro" *ngFor="let quadro of quadros">
+      <div class="card">
+        <div class="imagem-card">
+          <img class="card-img-top" src="../../../assets/img.png">
+          <a class="btnExcluir" (click)="abrirModalExcluirQuadro(quadro)">
+            
+            <i-bs name="trash" width="30" height="30" style="color:red;"></i-bs>
+          </a>
+
+          <a class="btnEditar">
+            <i-bs name="pencil-square" width="30" height="30">
+            </i-bs>
+          </a>
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item" style="text-align: center;">{{quadro.nome}}</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

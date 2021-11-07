@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CriarQuadroComponent } from './criar-quadro.component';
+import { QuadroComponent } from './quadro.component';
 
-describe('CriarQuadroComponent', () => {
-  let component: CriarQuadroComponent;
-  let fixture: ComponentFixture<CriarQuadroComponent>;
+describe('QuadroComponent', () => {
+  let component: QuadroComponent;
+  let fixture: ComponentFixture<QuadroComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CriarQuadroComponent ]
+      declarations: [ QuadroComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CriarQuadroComponent);
+    fixture = TestBed.createComponent(QuadroComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
