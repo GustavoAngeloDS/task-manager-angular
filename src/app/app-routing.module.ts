@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { MeusQuadrosComponent } from './gerenciador-quadros/meus-quadros/meus-quadros.component';
+import { QuadroComponent } from './work-area/quadro/quadro.component';
 
 const routes: Routes = [
   {
@@ -10,6 +11,10 @@ const routes: Routes = [
   {
     path: 'meus-quadros',
     component: MeusQuadrosComponent
+  },
+  {
+    path: 'work-area/quadro/:id',
+    component: QuadroComponent
   }
 ];
 

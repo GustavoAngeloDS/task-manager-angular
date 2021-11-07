@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { QuadroService } from './quadro.service';
+import { WorkAreaService } from './work-area.service';
 
-describe('QuadroService', () => {
-  let service: QuadroService;
+describe('WorkAreaService', () => {
+  let service: WorkAreaService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(QuadroService);
+    service = TestBed.inject(WorkAreaService);
   });
 
   it('should be created', () => {
