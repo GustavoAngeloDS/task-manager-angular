@@ -17,6 +17,8 @@ export class QuadroComponent implements OnInit {
   colunas!: Coluna[];
   tarefas!: Tarefa[];
 
+  tarefasMap = new Map<Tarefa, Number>();
+
   constructor(private route: ActivatedRoute, private router: Router, private workAreaService: WorkAreaService) { }
 
   ngOnInit(): void {
@@ -38,7 +40,6 @@ export class QuadroComponent implements OnInit {
   }
 
   buscarColunas(id: number): void {
-    
     this.workAreaService.findColunasByQuadro(id).subscribe(
       (colunas: Coluna[]) => {
         this.colunas = colunas;
@@ -47,31 +48,24 @@ export class QuadroComponent implements OnInit {
         if(error != null)
           alert(error);
       },
-      ()=> this.buscarTarefas(id)
+      () => this.buscarTodasAsTarefas(id)
     );
   }
 
-  buscarTarefas(id: number): void {
-    this.workAreaService.findTarefasByQuadro(id).subscribe(
+  buscarTodasAsTarefas(idQuadro : number): void {
+    this.workAreaService.findTarefasByQuadro(idQuadro).subscribe(
       (tarefas: Tarefa[]) => {
         this.tarefas = tarefas;
       },
       (error) => {
         if(error != null)
           alert(error);
+      },
+      ()=> {
+        this.tarefas.forEach((tarefa) => this.tarefasMap.set(tarefa, tarefa.coluna!.id!))
       }
     )
-  }
-
-  retornaTarefasPorColuna(idColuna: number): Tarefa[] {
-    if(!this.colunaPossuiTarefas(idColuna))
-      return [];
-
-    return this.tarefas.filter((tarefa) => tarefa.coluna!.id == idColuna);
-  }
-
-  colunaPossuiTarefas(idColuna: number): boolean{
-    return this.tarefas.filter((tarefa) => tarefa.coluna!.id == idColuna).length > 0;
+    console.log(this.tarefasMap);
   }
 
   drop(event: CdkDragDrop<Tarefa[]>) {

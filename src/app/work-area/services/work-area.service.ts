@@ -25,4 +25,8 @@ export class WorkAreaService {
   findTarefasByQuadro(id: number): Observable<Tarefa[]>{
     return this.httpClient.get<Tarefa[]>(`${this.apiUrl}/tarefas/find-by-quadro/${id}`);
   }
+
+  findTarefasByColuna(id: number): Observable<Tarefa[]>{
+    return this.httpClient.get<Tarefa[]>(`${this.apiUrl}/tarefas/find-by-coluna/${id}`);
+  }
 }
