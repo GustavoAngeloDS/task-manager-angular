@@ -1,24 +1,37 @@
 <!-- Não funciona porque é a mesma lista de tarefas em diferentes colunas! Se você move em um, acaba movendo a outra coluna também pois a referencia da lista de tarefas é a mesma -->
-<!--
 <div cdkDropListGroup>
   <div class="row">
     <div class="colunas" *ngFor="let coluna of colunas">
       <h2>{{coluna.nome}}</h2>
     
-      <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
-        <div class="example-box" *ngFor="let tarefa of buscarTarefasPorColuna(coluna.id!)" cdkDrag>
-          <p>{{tarefa.descricao}}</p>
+      <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)" [cdkDropListData]="tarefas">
+        <div class="example-box" *ngFor="let tarefa of tarefasColuna(coluna.id!)" cdkDrag >
+          <p *ngIf="tarefa.coluna!.id! == coluna.id">{{tarefa.descricao}}</p>
         </div>
+      </div>
+    </div>
+
+    <h2>lista teste</h2>
+    <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)" [cdkDropListData]="listaTeste">
+      <div class="example-box" *ngFor="let tarefa of listaTeste" cdkDrag >
+        {{tarefa.descricao}}
       </div>
     </div>
   </div>
 </div>
--->
-
 <!--
 <div class="example-container">
-  <div cdkDropList #todoList="cdkDropList" [cdkDropListData]="listaGenerica" class="example-list" (cdkDropListDropped)="drop($event)">
-    <div class="example-box" *ngFor="let tarefa of listaGenerica" cdkDrag>{{tarefa.descricao}}</div>
+  <div cdkDropListGroup>
+    <div class="row">
+      <div class="colunas" *ngFor="let coluna of colunas">
+        <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
+          <h2>{{coluna.nome}}</h2>
+          <div cdkDrag [cdkDragData]="colunas" class="example-box" *ngFor="let tarefa of coluna.tarefas">
+            {{tarefa.descricao}}
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 -->

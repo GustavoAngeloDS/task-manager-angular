@@ -17,7 +17,7 @@ export class QuadroComponent implements OnInit {
   colunas!: Coluna[];
   tarefas!: Tarefa[];
 
-  tarefasMap = new Map<Tarefa, Number>();
+  listaTeste: Tarefa[] = [];
 
   constructor(private route: ActivatedRoute, private router: Router, private workAreaService: WorkAreaService) { }
 
@@ -61,11 +61,26 @@ export class QuadroComponent implements OnInit {
         if(error != null)
           alert(error);
       },
-      ()=> {
-        this.tarefas.forEach((tarefa) => this.tarefasMap.set(tarefa, tarefa.coluna!.id!))
-      }
+      () => this.preencherTarefasPorColuna()
     )
-    console.log(this.tarefasMap);
+  }
+
+  tarefasColuna(idColuna: number): Tarefa[] {
+    let tarefas : Tarefa[] = [];
+    
+    this.tarefas.forEach((tarefa) => {
+      if(tarefa.coluna?.id === idColuna)
+        tarefas.push(tarefa);
+    });
+    
+    return tarefas;
+  }
+
+  preencherTarefasPorColuna(): void{
+    this.colunas.forEach((coluna) => {
+      let tarefas : Tarefa[] = this.tarefas.filter((tarefa) => tarefa.coluna?.id === coluna.id);
+      coluna.tarefas = tarefas;
+    })
   }
 
   drop(event: CdkDragDrop<Tarefa[]>) {
@@ -74,7 +89,7 @@ export class QuadroComponent implements OnInit {
     } else {
       transferArrayItem(
         event.previousContainer.data,
-        event.container.data,
+        this.listaTeste,
         event.previousIndex,
         event.currentIndex,
       );
