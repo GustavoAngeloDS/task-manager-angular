@@ -47,4 +47,10 @@ export class WorkAreaService {
       body: coluna
     })
   }
+
+  excluirTarefa(tarefa: Tarefa): Observable<void>{
+    return this.httpClient.delete<void>(`${this.apiUrl}/tarefas`, {
+      body: tarefa
+    })
+  }
 }

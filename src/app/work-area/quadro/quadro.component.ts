@@ -146,4 +146,12 @@ export class QuadroComponent implements OnInit {
     this.colunaNovaTarefa = colunaParaNovaTarefa;
     this.novaTarefa = new Tarefa(undefined, undefined, false, undefined, colunaParaNovaTarefa, this.quadro);
   }
+
+  excluirTarefa(): void {
+    this.workAreaService.excluirTarefa(this.tarefaSelecionada).subscribe(
+      ()=> [],
+      (error) => this.errorToastrService.exibirErro(error.data.message),
+      ()=> this.buscarTodasAsTarefas(this.quadro!.id!)
+    )
+  }
 }
