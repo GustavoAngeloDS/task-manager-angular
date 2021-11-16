@@ -1,5 +1,23 @@
+<ul class="list-group">
+  <li draggable *ngFor="let tarefa of tarefas" [dragData]="tarefas" class="list-group-item">
+    {{tarefa.descricao}}
+  </li>
+</ul>
+
+<div class="col-sm-3">
+  <div class="panel panel-default" droppable (onDrop)="onItemDrop($event)" *ngFor="let coluna of colunas">
+      <div class="panel-heading">{{coluna.nome}}</div>
+          <div class="panel-body">
+              <li *ngFor="let tarefa of tarefas" class="list-group-item">
+                <p *ngIf="tarefa.coluna!.id! === coluna.id">{{tarefa.descricao}}</p>
+              </li>
+          </div>
+      </div>
+  </div>
+
+
 <!-- Não funciona porque é a mesma lista de tarefas em diferentes colunas! Se você move em um, acaba movendo a outra coluna também pois a referencia da lista de tarefas é a mesma -->
-<div cdkDropListGroup>
+<!--<div cdkDropListGroup>
   <div class="row">
     <div class="colunas" *ngFor="let coluna of colunas">
       <h2>{{coluna.nome}}</h2>
@@ -18,7 +36,7 @@
       </div>
     </div>
   </div>
-</div>
+</div>-->
 <!--
 <div class="example-container">
   <div cdkDropListGroup>

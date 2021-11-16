@@ -17,9 +17,7 @@ export class QuadroComponent implements OnInit {
   colunas!: Coluna[];
   tarefas!: Tarefa[];
 
-  listaTeste: Tarefa[] = [];
-
-  constructor(private route: ActivatedRoute, private router: Router, private workAreaService: WorkAreaService) { }
+  constructor(private route: ActivatedRoute, private workAreaService: WorkAreaService) { }
 
   ngOnInit(): void {
     let id =+this.route.snapshot.params['id'];
@@ -60,39 +58,44 @@ export class QuadroComponent implements OnInit {
       (error) => {
         if(error != null)
           alert(error);
-      },
-      () => this.preencherTarefasPorColuna()
+      }
     )
   }
 
-  tarefasColuna(idColuna: number): Tarefa[] {
-    let tarefas : Tarefa[] = [];
-    
-    this.tarefas.forEach((tarefa) => {
-      if(tarefa.coluna?.id === idColuna)
-        tarefas.push(tarefa);
-    });
-    
-    return tarefas;
+  onItemDrop(e: any) {
+    const nomeColunaDestino : string = e.nativeEvent.target.lastChild.data;
+    const novaColuna = this.buscaColunaDestinoDaTarefa(nomeColunaDestino);
+
+    this.atualizaColunaDaTarefa(e.dragData[0], novaColuna);
   }
 
-  preencherTarefasPorColuna(): void{
+  buscaColunaDestinoDaTarefa(nomeColunaDestino: string): Coluna {
+    let novaColuna : Coluna = new Coluna();
+
     this.colunas.forEach((coluna) => {
-      let tarefas : Tarefa[] = this.tarefas.filter((tarefa) => tarefa.coluna?.id === coluna.id);
-      coluna.tarefas = tarefas;
+      if(coluna.nome == nomeColunaDestino)
+        novaColuna = coluna;
     })
+
+    return novaColuna;
   }
 
-  drop(event: CdkDragDrop<Tarefa[]>) {
-    if (event.previousContainer === event.container) {
-      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-    } else {
-      transferArrayItem(
-        event.previousContainer.data,
-        this.listaTeste,
-        event.previousIndex,
-        event.currentIndex,
-      );
-    }
+  atualizaColunaDaTarefa(tarefa: Tarefa, novaColuna: Coluna): void {
+    this.tarefas.forEach((tarefaToUpdate) => {
+      if(tarefaToUpdate == tarefa){
+        tarefaToUpdate.coluna = novaColuna;
+        this.atualizarTarefaApi(tarefaToUpdate);
+      }
+    });
+  }
+
+  atualizarTarefaApi(tarefa: Tarefa): void {
+    this.workAreaService.updateTarefa(tarefa).subscribe(
+      () => [],
+      (error) => {
+        if(error != null)
+          alert(error)
+      }
+    )
   }
 }

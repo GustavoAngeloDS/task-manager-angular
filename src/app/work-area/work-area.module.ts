@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { QuadroComponent } from './quadro/quadro.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { WorkAreaService } from './services/work-area.service';
+import { NgDragDropModule } from 'ng-drag-drop';
 
 @NgModule({
   declarations: [
@@ -10,7 +11,8 @@ import { WorkAreaService } from './services/work-area.service';
   ],
   imports: [
     CommonModule,
-    DragDropModule
+    DragDropModule,
+    NgDragDropModule.forRoot()
   ],
   providers: [
     WorkAreaService

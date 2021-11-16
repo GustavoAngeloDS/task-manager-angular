@@ -29,4 +29,8 @@ export class WorkAreaService {
   findTarefasByColuna(id: number): Observable<Tarefa[]>{
     return this.httpClient.get<Tarefa[]>(`${this.apiUrl}/tarefas/find-by-coluna/${id}`);
   }
+
+  updateTarefa(tarefa: Tarefa): Observable<Tarefa> {
+    return this.httpClient.put<Tarefa>(`${this.apiUrl}/tarefas`, tarefa);
+  }
 }
