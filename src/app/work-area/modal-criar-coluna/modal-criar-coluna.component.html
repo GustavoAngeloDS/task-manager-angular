@@ -1,0 +1,14 @@
+<div class="modal-header">
+  <h5 class="modal-title" id="modalLabel"> Nova coluna </h5>
+</div>
+<div class="modal-body text-center">
+  <div class="form-group row">
+    <label class="col-sm-4 col-form-label">Nome</label>
+    <div class="col-sm-8">
+      <input class="form-control" type="text" id="nome" name="nome" [(ngModel)]="coluna.nome" #nome="ngModel" />
+    </div>
+  </div>
+<br>
+  <button type="button" class="btn btn-primary" (click)="incluirColuna()">Confirmar</button>
+  <button type="button" class="btn btn-outline-dark" (click)="activeModal.close()">Cancelar</button>
+</div>

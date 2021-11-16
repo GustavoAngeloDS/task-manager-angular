@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { Coluna } from 'src/app/shared/models/coluna.model';
 import { Quadro } from 'src/app/shared/models/quadro.model';
 import { Tarefa } from 'src/app/shared/models/tarefa.model';
+import { ModalCriarColunaComponent } from '../modal-criar-coluna/modal-criar-coluna.component';
 import { WorkAreaService } from '../services/work-area.service';
 
 @Component({
@@ -21,7 +23,7 @@ export class QuadroComponent implements OnInit {
 
   isCarregando : boolean = true;
 
-  constructor(private route: ActivatedRoute, private workAreaService: WorkAreaService, private toastr: ToastrService) { }
+  constructor(private route: ActivatedRoute, private workAreaService: WorkAreaService, private toastr: ToastrService, private modalService: NgbModal) { }
 
   ngOnInit(): void {
     let id =+this.route.snapshot.params['id'];
@@ -122,5 +124,10 @@ export class QuadroComponent implements OnInit {
 
   setaTarefaSelecionada(tarefa: Tarefa){
     this.tarefaSelecionada = tarefa;
+  }
+
+  abrirModalNovaColuna(){
+    const modalRef = this.modalService.open(ModalCriarColunaComponent);
+    modalRef.componentInstance.quadro = this.quadro;
   }
 }

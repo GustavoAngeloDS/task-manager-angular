@@ -6,17 +6,23 @@ import { WorkAreaService } from './services/work-area.service';
 import { NgDragDropModule } from 'ng-drag-drop';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
+import { ModalCriarColunaComponent } from './modal-criar-coluna/modal-criar-coluna.component';
+import { RouterModule } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
-    QuadroComponent
+    QuadroComponent,
+    ModalCriarColunaComponent
   ],
   imports: [
     CommonModule,
     DragDropModule,
     NgDragDropModule.forRoot(),
     BrowserAnimationsModule, 
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    RouterModule,
+    FormsModule
   ],
   providers: [
     WorkAreaService

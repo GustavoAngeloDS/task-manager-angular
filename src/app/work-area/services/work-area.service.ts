@@ -33,4 +33,8 @@ export class WorkAreaService {
   updateTarefa(tarefa: Tarefa): Observable<Tarefa> {
     return this.httpClient.put<Tarefa>(`${this.apiUrl}/tarefas`, tarefa);
   }
+
+  salvarNovaColuna(coluna: Coluna): Observable<Coluna>{
+    return this.httpClient.post<Coluna>(`${this.apiUrl}/colunas`, coluna)
+  }
 }

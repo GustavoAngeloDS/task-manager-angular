@@ -1,12 +1,15 @@
 <div class="spinner-border carregando" role="status" *ngIf="isCarregando == true"></div>
 
-<div class="container">
+<div class="container alinhamento">
   <div class="row">
     <div class="col-sm panel-heading " droppable (onDrop)="onItemDrop($event)" *ngFor="let coluna of colunas">
-      <div class="coluna">{{coluna.nome}}</div>
+      <div class="coluna"><b>{{coluna.nome}}</b></div>
       <li draggable [dragData]="tarefas" *ngFor="let tarefa of retornaTarefasPorColuna(coluna.id!)" class="list-group-item" (dragstart)="setaTarefaSelecionada(tarefa)">
         <p>{{tarefa.descricao}}</p>
       </li>
+    </div>
+    <div class="col-sm">
+      <button type="button" class="btn btn-primary" (click)="abrirModalNovaColuna()">Nova coluna</button>
     </div>
   </div>
 </div>
