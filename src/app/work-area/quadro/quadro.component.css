@@ -2,3 +2,16 @@
   left:0%;
   width: 20rem;
 }
+
+.coluna {
+  text-align: center;
+  background-color: cadetblue;
+}
+
+.carregando {
+  position: absolute;
+  height: 100px;
+  width: 100px;
+  right: 5%;
+  bottom: 10%;
+}

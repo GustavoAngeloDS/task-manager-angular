@@ -4,6 +4,8 @@ import { QuadroComponent } from './quadro/quadro.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { WorkAreaService } from './services/work-area.service';
 import { NgDragDropModule } from 'ng-drag-drop';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -12,7 +14,9 @@ import { NgDragDropModule } from 'ng-drag-drop';
   imports: [
     CommonModule,
     DragDropModule,
-    NgDragDropModule.forRoot()
+    NgDragDropModule.forRoot(),
+    BrowserAnimationsModule, 
+    ToastrModule.forRoot()
   ],
   providers: [
     WorkAreaService

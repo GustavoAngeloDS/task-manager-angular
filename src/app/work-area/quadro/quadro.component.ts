@@ -1,6 +1,6 @@
-import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { Coluna } from 'src/app/shared/models/coluna.model';
 import { Quadro } from 'src/app/shared/models/quadro.model';
 import { Tarefa } from 'src/app/shared/models/tarefa.model';
@@ -17,7 +17,11 @@ export class QuadroComponent implements OnInit {
   colunas!: Coluna[];
   tarefas!: Tarefa[];
 
-  constructor(private route: ActivatedRoute, private workAreaService: WorkAreaService) { }
+  tarefaSelecionada : Tarefa = new Tarefa();
+
+  isCarregando : boolean = true;
+
+  constructor(private route: ActivatedRoute, private workAreaService: WorkAreaService, private toastr: ToastrService) { }
 
   ngOnInit(): void {
     let id =+this.route.snapshot.params['id'];
@@ -58,7 +62,8 @@ export class QuadroComponent implements OnInit {
       (error) => {
         if(error != null)
           alert(error);
-      }
+      },
+      ()=> this.isCarregando = false
     )
   }
 
@@ -66,7 +71,18 @@ export class QuadroComponent implements OnInit {
     const nomeColunaDestino : string = e.nativeEvent.target.lastChild.data;
     const novaColuna = this.buscaColunaDestinoDaTarefa(nomeColunaDestino);
 
-    this.atualizaColunaDaTarefa(e.dragData[0], novaColuna);
+    if(novaColuna.id != undefined)
+      this.atualizaColunaDaTarefa(this.tarefaSelecionada, novaColuna);
+    else
+      this.exibirAvisoDropTarefaIncorreto();
+  }
+
+  exibirAvisoDropTarefaIncorreto(): void {
+    this.toastr.warning('O card deve ser posicionado no título da coluna onde deseja transferi-lo', 'Aviso', {
+      timeOut: 10000,
+      positionClass: 'toast-bottom-right',
+      progressBar: true
+    })
   }
 
   buscaColunaDestinoDaTarefa(nomeColunaDestino: string): Coluna {
@@ -95,7 +111,16 @@ export class QuadroComponent implements OnInit {
       (error) => {
         if(error != null)
           alert(error)
-      }
+      },
+      ()=> this.tarefaSelecionada = new Tarefa()
     )
+  }
+
+  retornaTarefasPorColuna(idColuna: number): Tarefa[]{
+    return this.tarefas.filter((tarefa) => tarefa.coluna?.id == idColuna);
+  }
+
+  setaTarefaSelecionada(tarefa: Tarefa){
+    this.tarefaSelecionada = tarefa;
   }
 }
