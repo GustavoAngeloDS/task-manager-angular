@@ -5,6 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Coluna } from 'src/app/shared/models/coluna.model';
 import { Quadro } from 'src/app/shared/models/quadro.model';
 import { Tarefa } from 'src/app/shared/models/tarefa.model';
+import { ErrorToastrService } from 'src/app/shared/services/error-toastr.service';
 import { ModalCriarColunaComponent } from '../modal-criar-coluna/modal-criar-coluna.component';
 import { WorkAreaService } from '../services/work-area.service';
 
@@ -23,7 +24,7 @@ export class QuadroComponent implements OnInit {
 
   isCarregando : boolean = true;
 
-  constructor(private route: ActivatedRoute, private workAreaService: WorkAreaService, private toastr: ToastrService, private modalService: NgbModal) { }
+  constructor(private route: ActivatedRoute, private workAreaService: WorkAreaService, private toastr: ToastrService, private modalService: NgbModal, private errorToastrService: ErrorToastrService ) { }
 
   ngOnInit(): void {
     let id =+this.route.snapshot.params['id'];
@@ -35,10 +36,7 @@ export class QuadroComponent implements OnInit {
       (quadro)=> {
         this.quadro = quadro;
       },
-      (error) => {
-        if(error != null)
-          alert(error);
-      },
+      (error) => this.errorToastrService.exibirErro(error.error.message),
       () => this.buscarColunas(id)
     );
   }

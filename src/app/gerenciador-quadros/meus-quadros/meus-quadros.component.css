@@ -25,3 +25,13 @@
   position: absolute;
   right: 0%;
 }
+
+body{
+  position: absolute;
+  background-image: url('../../../assets/meusBoardsBackgroundImage.jpg');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  width: 100%;
+  height: 100%;
+}

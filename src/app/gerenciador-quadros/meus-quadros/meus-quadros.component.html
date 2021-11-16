@@ -1,25 +1,28 @@
-<div class="principal">
-  <button type="button" class="btn btn-primary btnNovoQuadro" (click)="abrirModalNovoQuadro()">Novo quadro</button>
+<body>
+  <div class="principal">
+    <button type="button" class="btn btn-primary btnNovoQuadro" (click)="abrirModalNovoQuadro()">Novo quadro</button>
 
-  <div class="row">
-    <div class="quadro" *ngFor="let quadro of quadros">
-      <div class="card">
-        <div class="imagem-card">
-          <img class="card-img-top" src="../../../assets/img.png">
-          <a class="btnExcluir" (click)="abrirModalExcluirQuadro(quadro)">
-            
-            <i-bs name="trash" width="30" height="30" style="color:red;"></i-bs>
-          </a>
+    <div class="row">
+      <div class="quadro" *ngFor="let quadro of quadros">
+        <div class="card">
+          <div class="imagem-card">
+            <img class="card-img-top" src="../../../assets/img.png">
+            <a class="btnExcluir" (click)="abrirModalExcluirQuadro(quadro)">
 
-          <a class="btnEditar" (click)="abrirModalEditarQuadro(quadro)">
-            <i-bs name="pencil-square" width="30" height="30">
-            </i-bs>
-          </a>
+              <i-bs name="trash" width="30" height="30" style="color:red;"></i-bs>
+            </a>
+
+            <a class="btnEditar" (click)="abrirModalEditarQuadro(quadro)">
+              <i-bs name="pencil-square" width="30" height="30">
+              </i-bs>
+            </a>
+          </div>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item" style="text-align: center;"><a
+                [routerLink]="['/work-area/quadro', quadro.id]">{{quadro.nome}}</a></li>
+          </ul>
         </div>
-        <ul class="list-group list-group-flush">
-          <li class="list-group-item" style="text-align: center;"><a [routerLink]="['/work-area/quadro', quadro.id]">{{quadro.nome}}</a></li>
-        </ul>
       </div>
     </div>
   </div>
-</div>
+</body>

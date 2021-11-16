@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Coluna } from 'src/app/shared/models/coluna.model';
 import { Quadro } from 'src/app/shared/models/quadro.model';
+import { ErrorToastrService } from 'src/app/shared/services/error-toastr.service';
 import { WorkAreaService } from '../services/work-area.service';
 
 @Component({
@@ -15,7 +16,7 @@ export class ModalCriarColunaComponent implements OnInit {
   coluna!: Coluna;
   @Input() quadro!: Quadro;
 
-  constructor(public activeModal: NgbActiveModal, private workAreaService: WorkAreaService, private router: Router) { }
+  constructor(public activeModal: NgbActiveModal, private workAreaService: WorkAreaService, private router: Router, private errorToastrService: ErrorToastrService) { }
 
   ngOnInit(): void {
     this.coluna = new Coluna();
@@ -25,10 +26,7 @@ export class ModalCriarColunaComponent implements OnInit {
   incluirColuna(): void {
     this.workAreaService.salvarNovaColuna(this.coluna).subscribe(
       ()=>[],
-      (error) => {
-        if(error != null)
-          alert(error)
-      },
+      (error) => this.errorToastrService.exibirErro(error.error.message),
       ()=> this.fecharModalAtualizarPagina()
     )
   }

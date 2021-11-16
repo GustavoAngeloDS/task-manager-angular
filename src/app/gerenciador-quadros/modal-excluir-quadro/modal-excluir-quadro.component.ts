@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Quadro } from 'src/app/shared/models/quadro.model';
+import { ErrorToastrService } from 'src/app/shared/services/error-toastr.service';
 import { GerenciadorQuadrosService } from '../services/gerenciador-quadros.service';
 
 @Component({
@@ -13,7 +14,7 @@ export class ModalExcluirQuadroComponent implements OnInit {
 
   @Input() quadro!: Quadro;
 
-  constructor(public activeModal: NgbActiveModal, private gerenciadorQuadrosService : GerenciadorQuadrosService, private router: Router) { }
+  constructor(public activeModal: NgbActiveModal, private gerenciadorQuadrosService : GerenciadorQuadrosService, private router: Router, private errorToastrService: ErrorToastrService) { }
 
   ngOnInit(): void {
   }
@@ -21,10 +22,7 @@ export class ModalExcluirQuadroComponent implements OnInit {
   excluirQuadro() : void {
     this.gerenciadorQuadrosService.delete(this.quadro).subscribe(
       ()=>{},
-      (error) => {
-        if(error != null)
-          alert(error);
-      },
+      (error) => this.errorToastrService.exibirErro(error.error.message),
       () => this.fecharModalERecarregarPagina());
     }
 

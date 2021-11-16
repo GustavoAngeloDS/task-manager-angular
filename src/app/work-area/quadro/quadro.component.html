@@ -1,6 +1,7 @@
+<body>
 <div class="spinner-border carregando" role="status" *ngIf="isCarregando == true"></div>
 
-<div class="container alinhamento">
+<div *ngIf="isCarregando==false" class="container alinhamento">
   <div class="row">
     <div class="col-sm panel-heading " droppable (onDrop)="onItemDrop($event)" *ngFor="let coluna of colunas">
       <div class="coluna"><b>{{coluna.nome}}</b></div>
@@ -13,3 +14,4 @@
     </div>
   </div>
 </div>
+</body>

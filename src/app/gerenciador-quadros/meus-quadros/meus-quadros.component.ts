@@ -5,6 +5,7 @@ import {NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ModalExcluirQuadroComponent } from '../modal-excluir-quadro/modal-excluir-quadro.component';
 import { ModalAtualizarQuadroComponent } from '../modal-atualizar-quadro/modal-atualizar-quadro.component';
 import { ModalCriarQuadroComponent } from '../modal-criar-quadro/modal-criar-quadro.component';
+import { ErrorToastrService } from 'src/app/shared/services/error-toastr.service';
 
 @Component({
   selector: 'app-meus-quadros',
@@ -15,7 +16,7 @@ export class MeusQuadrosComponent implements OnInit {
 
   public quadros!: Quadro[];
 
-  constructor(private gerenciadorQuadrosService: GerenciadorQuadrosService, private modalService: NgbModal) { }
+  constructor(private gerenciadorQuadrosService: GerenciadorQuadrosService, private modalService: NgbModal, private errorToastrService: ErrorToastrService) { }
 
   ngOnInit(): void {
     this.buscarQuadrosAtivos();
@@ -26,9 +27,7 @@ export class MeusQuadrosComponent implements OnInit {
       (quadros: Quadro[]) => {
         this.quadros = quadros;
       },
-      (error) => {
-        alert(error);
-      }
+      (error) => this.errorToastrService.exibirErro(error.error.message),
     )
   }
 

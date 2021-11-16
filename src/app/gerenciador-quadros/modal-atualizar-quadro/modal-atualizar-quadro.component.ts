@@ -2,6 +2,7 @@ import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Quadro } from 'src/app/shared/models/quadro.model';
+import { ErrorToastrService } from 'src/app/shared/services/error-toastr.service';
 import { GerenciadorQuadrosService } from '../services/gerenciador-quadros.service';
 
 @Component({
@@ -16,7 +17,7 @@ export class ModalAtualizarQuadroComponent implements OnInit {
 
   quadroAtualizado! : Quadro;
 
-  constructor(public activeModal: NgbActiveModal, private gerenciadorQuadrosService : GerenciadorQuadrosService) { }
+  constructor(public activeModal: NgbActiveModal, private gerenciadorQuadrosService : GerenciadorQuadrosService, private errorToastrService: ErrorToastrService) { }
 
   ngOnInit(): void {
     this.quadroAtualizado = this.quadro;
@@ -26,10 +27,7 @@ export class ModalAtualizarQuadroComponent implements OnInit {
     console.log(this.quadroAtualizado);
     this.gerenciadorQuadrosService.update(this.quadroAtualizado).subscribe(
       ()=>{},
-      (error) => {
-        if(error != null)
-          alert(error)
-      },
+      (error) => this.errorToastrService.exibirErro(error.error.message),
       ()=> this.activeModal.close()
     );
   }
