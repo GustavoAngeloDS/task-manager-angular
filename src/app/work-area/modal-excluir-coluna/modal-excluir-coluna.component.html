@@ -1,0 +1,12 @@
+<div class="modal-header">
+  <h5 class="modal-title" id="modalLabel"> Remover coluna </h5>
+</div>
+<div class="modal-body text-center">
+  <div>
+    <b><p>Tem certeza que deseja remover a coluna {{ coluna.nome }}?</p></b>
+    <p>Caso a coluna possua tarefas e você deseja guarda-las, você pode envia-las para outra coluna</p>
+    <p>Esta ação não poderá ser desfeita</p>
+  </div>
+  <button type="button" class="btn btn-danger" (click)="excluirColuna()">Confirmar exclusão</button>
+  <button type="button" class="btn btn-outline-dark" (click)="activeModal.close()">Cancelar</button>
+</div>

@@ -1,17 +1,34 @@
 <body>
-<div class="spinner-border carregando" role="status" *ngIf="isCarregando == true"></div>
+  <div class="spinner-border carregando" role="status" *ngIf="isCarregando == true"></div>
 
-<div *ngIf="isCarregando==false" class="container alinhamento">
-  <div class="row">
-    <div class="col-sm panel-heading " droppable (onDrop)="onItemDrop($event)" *ngFor="let coluna of colunas">
-      <div class="coluna"><b>{{coluna.nome}}</b></div>
-      <li draggable [dragData]="tarefas" *ngFor="let tarefa of retornaTarefasPorColuna(coluna.id!)" class="list-group-item" (dragstart)="setaTarefaSelecionada(tarefa)">
-        <p>{{tarefa.descricao}}</p>
-      </li>
-    </div>
-    <div class="col-sm">
-      <button type="button" class="btn btn-primary" (click)="abrirModalNovaColuna()">Nova coluna</button>
+  <div *ngIf="isCarregando==false" class="container alinhamento">
+    <div class="row">
+      <div class="col-sm panel-heading " droppable (onDrop)="onItemDrop($event)" *ngFor="let coluna of colunas">
+        <div class="coluna">
+          <b>{{coluna.nome}}</b>
+          <a (click)="abrirModalExcluirColuna(coluna)">
+            <i-bs name="trash" width="30" height="30"></i-bs>
+          </a>
+        </div>
+        <li draggable [dragData]="tarefas" *ngFor="let tarefa of retornaTarefasPorColuna(coluna.id!)"
+          class="list-group-item" (dragstart)="setaTarefaSelecionada(tarefa)">
+          <p>{{tarefa.descricao}}</p>
+        </li>
+        <div *ngIf="isInserindoNovaTarefa==true && coluna === colunaNovaTarefa">
+          <li class="list-group-item">
+            <input type="text" class="inputNovaTarefa" id="descricaoNovaTarefa" name="descricaoNovaTarefa"
+              [(ngModel)]="novaTarefa.descricao" #descricaoNovaTarefa="ngModel" />
+            <a (click)="inserirNovaTarefa()">
+              <i-bs name="check-lg" style="color: green;" width="30" height="30">
+              </i-bs>
+            </a>
+          </li>
+        </div>
+        <button type="button" class="btn btn-light" (click)="habilitarCamposNovaTarefa(coluna)">+</button>
+      </div>
+      <div class="col-sm">
+        <button type="button" class="btn btn-primary" (click)="abrirModalNovaColuna()">Nova coluna</button>
+      </div>
     </div>
   </div>
-</div>
 </body>

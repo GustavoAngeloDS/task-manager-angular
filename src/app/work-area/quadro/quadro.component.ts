@@ -7,6 +7,7 @@ import { Quadro } from 'src/app/shared/models/quadro.model';
 import { Tarefa } from 'src/app/shared/models/tarefa.model';
 import { ErrorToastrService } from 'src/app/shared/services/error-toastr.service';
 import { ModalCriarColunaComponent } from '../modal-criar-coluna/modal-criar-coluna.component';
+import { ModalExcluirColunaComponent } from '../modal-excluir-coluna/modal-excluir-coluna.component';
 import { WorkAreaService } from '../services/work-area.service';
 
 @Component({
@@ -20,20 +21,23 @@ export class QuadroComponent implements OnInit {
   colunas!: Coluna[];
   tarefas!: Tarefa[];
 
-  tarefaSelecionada : Tarefa = new Tarefa();
+  tarefaSelecionada: Tarefa = new Tarefa();
 
-  isCarregando : boolean = true;
+  isCarregando: boolean = true;
+  isInserindoNovaTarefa: boolean = false;
+  novaTarefa!: Tarefa;
+  colunaNovaTarefa!: Coluna;
 
-  constructor(private route: ActivatedRoute, private workAreaService: WorkAreaService, private toastr: ToastrService, private modalService: NgbModal, private errorToastrService: ErrorToastrService ) { }
+  constructor(private route: ActivatedRoute, private workAreaService: WorkAreaService, private toastr: ToastrService, private modalService: NgbModal, private errorToastrService: ErrorToastrService) { }
 
   ngOnInit(): void {
-    let id =+this.route.snapshot.params['id'];
+    let id = +this.route.snapshot.params['id'];
     this.buscarQuadro(id);
   }
 
-  buscarQuadro(id: number): void{
+  buscarQuadro(id: number): void {
     this.workAreaService.findQuadroById(id).subscribe(
-      (quadro)=> {
+      (quadro) => {
         this.quadro = quadro;
       },
       (error) => this.errorToastrService.exibirErro(error.error.message),
@@ -46,32 +50,26 @@ export class QuadroComponent implements OnInit {
       (colunas: Coluna[]) => {
         this.colunas = colunas;
       },
-      (error)=> {
-        if(error != null)
-          alert(error);
-      },
+      (error) => this.errorToastrService.exibirErro(error.error.message),
       () => this.buscarTodasAsTarefas(id)
     );
   }
 
-  buscarTodasAsTarefas(idQuadro : number): void {
+  buscarTodasAsTarefas(idQuadro: number): void {
     this.workAreaService.findTarefasByQuadro(idQuadro).subscribe(
       (tarefas: Tarefa[]) => {
         this.tarefas = tarefas;
       },
-      (error) => {
-        if(error != null)
-          alert(error);
-      },
-      ()=> this.isCarregando = false
+      (error) => this.errorToastrService.exibirErro(error.error.message),
+      () => this.isCarregando = false
     )
   }
 
   onItemDrop(e: any) {
-    const nomeColunaDestino : string = e.nativeEvent.target.lastChild.data;
+    const nomeColunaDestino: string = e.nativeEvent.target.lastChild.data;
     const novaColuna = this.buscaColunaDestinoDaTarefa(nomeColunaDestino);
 
-    if(novaColuna.id != undefined)
+    if (novaColuna.id != undefined)
       this.atualizaColunaDaTarefa(this.tarefaSelecionada, novaColuna);
     else
       this.exibirAvisoDropTarefaIncorreto();
@@ -86,10 +84,10 @@ export class QuadroComponent implements OnInit {
   }
 
   buscaColunaDestinoDaTarefa(nomeColunaDestino: string): Coluna {
-    let novaColuna : Coluna = new Coluna();
+    let novaColuna: Coluna = new Coluna();
 
     this.colunas.forEach((coluna) => {
-      if(coluna.nome == nomeColunaDestino)
+      if (coluna.nome == nomeColunaDestino)
         novaColuna = coluna;
     })
 
@@ -98,7 +96,7 @@ export class QuadroComponent implements OnInit {
 
   atualizaColunaDaTarefa(tarefa: Tarefa, novaColuna: Coluna): void {
     this.tarefas.forEach((tarefaToUpdate) => {
-      if(tarefaToUpdate == tarefa){
+      if (tarefaToUpdate == tarefa) {
         tarefaToUpdate.coluna = novaColuna;
         this.atualizarTarefaApi(tarefaToUpdate);
       }
@@ -108,24 +106,44 @@ export class QuadroComponent implements OnInit {
   atualizarTarefaApi(tarefa: Tarefa): void {
     this.workAreaService.updateTarefa(tarefa).subscribe(
       () => [],
-      (error) => {
-        if(error != null)
-          alert(error)
-      },
-      ()=> this.tarefaSelecionada = new Tarefa()
+      (error) => this.errorToastrService.exibirErro(error.error.message),
+      () => this.tarefaSelecionada = new Tarefa()
     )
   }
 
-  retornaTarefasPorColuna(idColuna: number): Tarefa[]{
+  inserirNovaTarefa(): void {
+    this.workAreaService.salvarNovaTarefa(this.novaTarefa).subscribe(
+      () => [],
+      (error) => this.errorToastrService.exibirErro(error.error.message),
+      () => {
+        this.buscarTodasAsTarefas(this.quadro!.id!)
+        this.isInserindoNovaTarefa = false;
+        this.novaTarefa = new Tarefa();
+      }
+    )
+  }
+
+  retornaTarefasPorColuna(idColuna: number): Tarefa[] {
     return this.tarefas.filter((tarefa) => tarefa.coluna?.id == idColuna);
   }
 
-  setaTarefaSelecionada(tarefa: Tarefa){
+  setaTarefaSelecionada(tarefa: Tarefa) {
     this.tarefaSelecionada = tarefa;
   }
 
-  abrirModalNovaColuna(){
+  abrirModalNovaColuna() {
     const modalRef = this.modalService.open(ModalCriarColunaComponent);
     modalRef.componentInstance.quadro = this.quadro;
+  }
+
+  abrirModalExcluirColuna(coluna: Coluna) {
+    const modalRef = this.modalService.open(ModalExcluirColunaComponent);
+    modalRef.componentInstance.coluna = coluna;
+  }
+
+  habilitarCamposNovaTarefa(colunaParaNovaTarefa: Coluna): void {
+    this.isInserindoNovaTarefa = true;
+    this.colunaNovaTarefa = colunaParaNovaTarefa;
+    this.novaTarefa = new Tarefa(undefined, undefined, false, undefined, colunaParaNovaTarefa, this.quadro);
   }
 }

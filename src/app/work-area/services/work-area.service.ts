@@ -37,4 +37,14 @@ export class WorkAreaService {
   salvarNovaColuna(coluna: Coluna): Observable<Coluna>{
     return this.httpClient.post<Coluna>(`${this.apiUrl}/colunas`, coluna)
   }
+
+  salvarNovaTarefa(tarefa: Tarefa): Observable<Tarefa>{
+    return this.httpClient.post<Tarefa>(`${this.apiUrl}/tarefas`, tarefa)
+  }
+
+  excluirColuna(coluna: Coluna): Observable<void> {
+    return this.httpClient.delete<void>(`${this.apiUrl}/colunas`, {
+      body: coluna
+    })
+  }
 }

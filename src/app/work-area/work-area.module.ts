@@ -9,11 +9,14 @@ import { ToastrModule } from 'ngx-toastr';
 import { ModalCriarColunaComponent } from './modal-criar-coluna/modal-criar-coluna.component';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { allIcons, NgxBootstrapIconsModule } from 'ngx-bootstrap-icons';
+import { ModalExcluirColunaComponent } from './modal-excluir-coluna/modal-excluir-coluna.component';
 
 @NgModule({
   declarations: [
     QuadroComponent,
-    ModalCriarColunaComponent
+    ModalCriarColunaComponent,
+    ModalExcluirColunaComponent
   ],
   imports: [
     CommonModule,
@@ -22,7 +25,8 @@ import { FormsModule } from '@angular/forms';
     BrowserAnimationsModule, 
     ToastrModule.forRoot(),
     RouterModule,
-    FormsModule
+    FormsModule,
+    NgxBootstrapIconsModule.pick(allIcons),
   ],
   providers: [
     WorkAreaService
